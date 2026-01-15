@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+
+# Ambientes e configs
+.env
+
+# IDEs
+.vscode/
+.idea/
+
+# Banco / temporários
+*.db
+*.log
