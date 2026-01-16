@@ -1,72 +1,38 @@
-\# 💰 Controle Financeiro Desktop
+# 🌍 README available in: \[English](README.md) | \[Português](README.pt-BR.md)
 
+# 
 
+# Personal Finance Control – Python Desktop Application
 
-Aplicação desktop desenvolvida em Python para controle financeiro pessoal, com autenticação de usuários, dashboard interativo e geração de relatórios.
+A desktop application developed in Python for personal financial management, focused on practicing software development, database integration, and data organization.
 
+## 🚀 Features
 
+* User authentication system
+* Financial dashboard with balance, income, expenses, and monthly goals
+* Expense categorization and recurring transaction control
+* Report generation in PDF, Excel, and graphical formats
+* Data persistence using MySQL
 
-\## 🚀 Funcionalidades
+## 🛠 Technologies
 
+* Python
+* MySQL
+* Tkinter
+* Git \& GitHub
 
+## 📊 Project Purpose
 
-\- Login e cadastro de usuários
+This project was created to apply programming concepts, database management, and software development practices in a real-world context.
 
-\- Dashboard com saldo, entradas, saídas e meta mensal
+## ▶️ How to Run
 
-\- Classificação de gastos:
+1. Clone the repository
+2. Install the required dependencies
+3. Configure the MySQL database
+4. Run the main Python file
 
-&nbsp; - Essencial
+## 📌 Notes
 
-&nbsp; - Fixo (com periodicidade)
-
-&nbsp; - Supérfluo
-
-&nbsp; - Emergencial
-
-\- Relatórios:
-
-&nbsp; - 📄 PDF
-
-&nbsp; - 📊 Gráfico de pizza
-
-&nbsp; - 📈 Excel
-
-\- Interface moderna com ttkbootstrap
-
-\- Banco de dados MySQL
-
-\- Scroll vertical e UX aprimorada
-
-
-
-\## 🛠 Tecnologias
-
-
-
-\- Python 3
-
-\- Tkinter + ttkbootstrap
-
-\- MySQL
-
-\- Matplotlib
-
-\- OpenPyXL
-
-\- ReportLab
-
-
-
-\## ▶️ Como executar
-
-
-
-1\. Clone o repositório:
-
-```bash
-
-git clone https://github.com/SEU\_USUARIO/controle-financeiro-python.git
-
-
+This is a personal project focused on learning and improving software development skills.
 
