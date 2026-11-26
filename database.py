@@ -1,17 +1,14 @@
+import os
 import mysql.connector
+from dotenv import load_dotenv
 
-DB_HOST = "localhost"
-DB_NAME = "controle_financeiro"
-
-# RECOMENDADO: use o usuário do app
-DB_USER = "financeiro"
-DB_PASSWORD = "financeiro123"
+load_dotenv()
 
 def conectar():
     return mysql.connector.connect(
-        host=DB_HOST,
-        user=DB_USER,
-        password=DB_PASSWORD,
-        database=DB_NAME,
-        auth_plugin="mysql_native_password",
+        host=os.getenv("DB_HOST", "localhost"),
+        port=int(os.getenv("DB_PORT", 3306)),
+        user=os.getenv("DB_USER", "financeiro"),
+        password=os.getenv("DB_PASSWORD", "financeiro123"),
+        database=os.getenv("DB_NAME", "controle_financeiro"),
     )
