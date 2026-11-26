@@ -1,66 +1,56 @@
-from tkinter import messagebox
+import bcrypt
 from database import conectar
 
-usuario_atual = None
 
-def usuario_logado():
-    return usuario_atual
+def gerar_hash_senha(senha: str) -> str:
+    return bcrypt.hashpw(senha.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
 
-def login(apelido, senha):
-    global usuario_atual
 
+def verificar_senha(senha: str, senha_hash: str) -> bool:
+    return bcrypt.checkpw(senha.encode("utf-8"), senha_hash.encode("utf-8"))
+
+
+def login(apelido: str, senha: str) -> tuple[bool, int | str]:
     apelido = (apelido or "").strip()
     senha = (senha or "").strip()
 
     if not apelido or not senha:
-        messagebox.showerror("Erro", "Preencha usuário e senha.")
-        return False
+        return False, "Preencha usuário e senha."
 
-    con = None
     try:
         con = conectar()
         cur = con.cursor()
         cur.execute(
-            "SELECT id FROM usuarios WHERE apelido=%s AND senha=%s",
-            (apelido, senha),
+            "SELECT id, senha FROM usuarios WHERE apelido=%s",
+            (apelido,),
         )
         r = cur.fetchone()
-        if r:
-            usuario_atual = int(r[0])
-            return True
-        messagebox.showerror("Erro", "Usuário ou senha inválidos.")
-        return False
+        cur.close()
+        if r and verificar_senha(senha, r[1]):
+            return True, int(r[0])
+        return False, "Usuário ou senha inválidos."
     except Exception as e:
-        messagebox.showerror("Erro", f"Falha no login: {e}")
-        return False
-    finally:
-        if con:
-            con.close()
+        return False, f"Falha no login: {e}"
 
-def criar_conta(apelido, senha):
+
+def criar_conta(apelido: str, senha: str) -> tuple[bool, str]:
     apelido = (apelido or "").strip()
     senha = (senha or "").strip()
 
     if not apelido or not senha:
-        messagebox.showerror("Erro", "Preencha apelido e senha.")
-        return
+        return False, "Preencha apelido e senha."
 
-    con = None
     try:
         con = conectar()
         cur = con.cursor()
+        senha_hash = gerar_hash_senha(senha)
         cur.execute(
-            "INSERT INTO usuarios (apelido, senha) VALUES (%s,%s)",
-            (apelido, senha),
+            "INSERT INTO usuarios (apelido, senha) VALUES (%s, %s)",
+            (apelido, senha_hash),
         )
-        con.commit()
-        messagebox.showinfo("OK", "Conta criada! Agora faça login.")
+        cur.close()
+        return True, "Conta criada com sucesso! Agora faça login."
     except Exception as e:
-        messagebox.showerror("Erro", f"Não foi possível criar conta: {e}")
-    finally:
-        if con:
-            con.close()
-
-def logout():
-    global usuario_atual
-    usuario_atual = None
+        if "Duplicate entry" in str(e):
+            return False, "Este apelido já está em uso."
+        return False, f"Não foi possível criar conta: {e}"
